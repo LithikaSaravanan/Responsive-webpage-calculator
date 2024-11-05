@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorful Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+        .calculator {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 300px;
+        }
+        .display {
+            width: 90%;
+            height: 50px;
+            margin-bottom: 15px;
+            margin-right: 10px;
+            text-align: right;
+            padding: 10px 10px;
+            border: 2px solid #f7c6c7;
+            border-radius: 5px;
+            font-size: 28px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .button {
+            width: 60px;
+            height: 60px;
+            margin: 5px;
+            font-size: 24px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .button:hover {
+            transform: scale(1.05);
+        }
+        /* Color styles for buttons */
+        .button:nth-child(1) { background-color: #ff6f61; color: white; }
+        .button:nth-child(2) { background-color: #6ab04c; color: white; }
+        .button:nth-child(3) { background-color: #e84e1b; color: white; }
+        .button:nth-child(4) { background-color: #4a69bd; color: white; }
+        .button:nth-child(5) { background-color: #1abc9c; color: white; }
+        .button:nth-child(6) { background-color: #ff9f43; color: white; }
+        .button:nth-child(7) { background-color: #fd79a8; color: white; }
+        .button:nth-child(8) { background-color: #7f8c8d; color: white; }
+        .button:nth-child(9) { background-color: #e1b12c; color: white; }
+        .button:nth-child(10) { background-color: #dcdde1; color: #2f3640; }
+        .button:nth-child(11) { background-color: #4a4a4a; color: white; } /* % button */
+        .button:nth-child(12) { background-color: #3498db; color: white; } /* . button */
+        .button:nth-child(13) { background-color: #8e44ad; color: white; } /* Enter button */
+        .button:nth-child(14) { background-color: #e67e22; color: white; } /* Del button */
+
+        @media (max-width: 320px) {
+            .button {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" class="display" id="display" disabled>
+        <div>
+            <button class="button" onclick="clearDisplay()">C</button>
+            <button class="button" onclick="appendToDisplay('/')">/</button>
+            <button class="button" onclick="appendToDisplay('*')">*</button>
+            <button class="button" onclick="appendToDisplay('-')">-</button>
+        </div>
+        <div>
+            <button class="button" onclick="appendToDisplay('7')">7</button>
+            <button class="button" onclick="appendToDisplay('8')">8</button>
+            <button class="button" onclick="appendToDisplay('9')">9</button>
+            <button class="button" onclick="appendToDisplay('+')">+</button>
+        </div>
+        <div>
+            <button class="button" onclick="appendToDisplay('4')">4</button>
+            <button class="button" onclick="appendToDisplay('5')">5</button>
+            <button class="button" onclick="appendToDisplay('6')">6</button>
+            <button class="button" onclick="calculateResult()">=</button>
+        </div>
+        <div>
+            <button class="button" onclick="appendToDisplay('1')">1</button>
+            <button class="button" onclick="appendToDisplay('2')">2</button>
+            <button class="button" onclick="appendToDisplay('3')">3</button>
+            <button class="button" onclick="deleteLast()">Del</button> <!-- Del Button -->
+        </div>
+        <div>
+            <button class="button" onclick="appendToDisplay('0')">0</button>
+            <button class="button" onclick="appendToDisplay('%')">%</button>
+            <button class="button" onclick="appendToDisplay('.')">.</button>
+            <button class="button" onclick="calculateResult()">Enter</button> <!-- Enter Button -->
+        </div>
+    </div>
+
+    <script>
+        function appendToDisplay(value) {
+            document.getElementById('display').value += value;
+        }
+
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        function deleteLast() {
+            const display = document.getElementById('display');
+            display.value = display.value.slice(0, -1); // Remove last character
+        }
+
+        function calculateResult() {
+            const display = document.getElementById('display');
+            try {
+                // Handle percentage calculation
+                const expression = display.value.replace(/%/g, '/100');
+                display.value = eval(expression);
+            } catch (e) {
+                display.value = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>
